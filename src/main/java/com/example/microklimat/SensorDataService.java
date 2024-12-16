@@ -11,17 +11,21 @@ public class SensorDataService {
     @Autowired
     private SensorDataRepository repository;
 
+    // Метод для получения последних 10 записей
+    public List<SensorData> getLastTenSensorData() {
+        List<SensorData> allData = repository.findAll();  // Получаем все данные
+        int size = allData.size();
+        return allData.subList(Math.max(size - 10, 0), size);  // Возвращаем последние 10 записей
+    }
     public void saveSensorData(SensorData data) {
+        System.out.println("Сохранение данных в репозиторий: " + data);
         repository.save(data);
     }
 
     public List<SensorData> getAllSensorData() {
-        return repository.findAll();
+        List<SensorData> data = repository.findAll();
+        System.out.println("Получены данные из репозитория: " + data);
+        return data;
     }
 
-    public List<SensorData> getSensorDataForPeriod(long start, long end) {
-        return repository.findAll().stream()
-                .filter(data -> data.getTimestamp() >= start && data.getTimestamp() <= end)
-                .toList();
-    }
 }

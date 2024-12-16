@@ -82,25 +82,47 @@
   </div>
 </div>
 
+<!-- Ссылка на страницу с таблицей и кнопкой скачивания отчета -->
+<div style="text-align: center; margin-top: 20px;">
+  <a href="/sensorDataPage" class="btn btn-info">Перейти к данным с датчиков</a>
+</div>
+
 <script>
-  // Открытие WebSocket-соединения
   const socket = new WebSocket('ws://localhost:8080/ws');
 
+  // Обработчик при открытии соединения
+  socket.onopen = function() {
+    console.log('WebSocket соединение установлено');
+    // Запрашиваем данные только один раз при открытии соединения
+    socket.send('getData');
+  };
+
+  // Обработчик получения данных
   socket.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    // Обновляем данные на странице для каждой комнаты
-    for (const room in data) {
-      document.getElementById(`temp${room}`).textContent = data[room].temp;
-      document.getElementById(`hum${room}`).textContent = data[room].hum;
+    try {
+      const data = JSON.parse(event.data);
+      console.log("Получены данные по WebSocket:", data);
+
+      // Обновление DOM с полученными данными
+      for (const room in data) {
+        if (document.getElementById(`temp${room}`)) {
+          document.getElementById(`temp${room}`).textContent = data[room].temp;
+          document.getElementById(`hum${room}`).textContent = data[room].hum;
+        }
+      }
+    } catch (error) {
+      console.error("Ошибка при обработке данных WebSocket:", error);
     }
   };
 
-  socket.onopen = function() {
-    console.log('WebSocket соединение установлено');
-  };
-
+  // Обработчик закрытия соединения
   socket.onclose = function() {
     console.log('WebSocket соединение закрыто');
+  };
+
+  // Обработчик ошибок WebSocket
+  socket.onerror = function(error) {
+    console.error('Ошибка WebSocket:', error);
   };
 </script>
 

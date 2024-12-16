@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Данные с датчиков</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Данные с датчиков</h1>
+
+  <!-- Таблица с данными -->
+  <table class="table table-bordered mt-4">
+    <thead>
+    <tr>
+      <th>Room ID</th>
+      <th>Температура</th>
+      <th>Влажность</th>
+      <th>Дата и время</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Пример данных, замените на динамическую генерацию -->
+    <!-- Добавьте здесь данные из модели, как в примере -->
+    <!-- Пример динамической генерации через Thymeleaf -->
+    <tr th:each="data : ${data}">
+      <td th:text="${data.roomId}"></td>
+      <td th:text="${data.temperature}"></td>
+      <td th:text="${data.humidity}"></td>
+      <td th:text="${data.timestamp}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Кнопка для скачивания отчета -->
+  <a href="/download" class="btn btn-primary mt-3">Скачать отчет</a>
+</div>
+
+<!-- Подключение Bootstrap (по желанию) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
