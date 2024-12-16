@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>План этажа с подложкой</title>
+  <style>
+    /* Контейнер для всей схемы */
+    .floor-plan-container {
+      position: relative;
+      width: 1200px;  /* Установите ширину, соответствующую изображению */
+      height: 800px; /* Установите высоту, соответствующую изображению */
+      margin: 20px auto;
+      background-image: url('/1000030410.svg'); /* Путь к вашему изображению */
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Комнаты */
+    .room {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+      padding: 5px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Название комнаты */
+    .room-name {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    /* Поля температуры и влажности */
+    .sensor {
+      font-size: 14px;
+    }
+
+    /* Позиции для каждой комнаты, скорректируйте по схеме */
+    #room5301 { top: 33%; left: 15%; width: 80px; height: 60px; }
+    #room5302 { top: 60%; left: 15%; width: 80px; height: 60px; }
+    #room5303 { top: 60%; left: 38%; width: 80px; height: 60px; }
+    #room5304 { top: 60%; left: 68%; width: 80px; height: 60px; }
+    #room5305 { top: 33%; left: 68%; width: 80px; height: 60px; }
+    #room5306 { top: 36%; left: 49%; width: 80px; height: 60px; }
+  </style>
+</head>
+<body>
+
+<div class="floor-plan-container">
+  <!-- Комнаты -->
+  <div class="room" id="room5301">
+    <div class="room-name">5301</div>
+    <div class="sensor">Температура: <span id="temp5301">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5301">--</span>%</div>
+  </div>
+  <div class="room" id="room5302">
+    <div class="room-name">5302</div>
+    <div class="sensor">Температура: <span id="temp5302">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5302">--</span>%</div>
+  </div>
+  <div class="room" id="room5303">
+    <div class="room-name">5303</div>
+    <div class="sensor">Температура: <span id="temp5303">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5303">--</span>%</div>
+  </div>
+  <div class="room" id="room5304">
+    <div class="room-name">5304</div>
+    <div class="sensor">Температура: <span id="temp5304">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5304">--</span>%</div>
+  </div>
+  <div class="room" id="room5305">
+    <div class="room-name">5305</div>
+    <div class="sensor">Температура: <span id="temp5305">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5305">--</span>%</div>
+  </div>
+  <div class="room" id="room5306">
+    <div class="room-name">5306</div>
+    <div class="sensor">Температура: <span id="temp5306">--</span>°C</div>
+    <div class="sensor">Влажность: <span id="hum5306">--</span>%</div>
+  </div>
+</div>
+
+<script>
+  // Открытие WebSocket-соединения
+  const socket = new WebSocket('ws://localhost:8080/ws');
+
+  socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    // Обновляем данные на странице для каждой комнаты
+    for (const room in data) {
+      document.getElementById(`temp${room}`).textContent = data[room].temp;
+      document.getElementById(`hum${room}`).textContent = data[room].hum;
+    }
+  };
+
+  socket.onopen = function() {
+    console.log('WebSocket соединение установлено');
+  };
+
+  socket.onclose = function() {
+    console.log('WebSocket соединение закрыто');
+  };
+</script>
+
+</body>
+</html>
