@@ -1,9 +1,12 @@
 package com.example.microklimat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
@@ -20,6 +23,13 @@ public class SensorDataController {
     public String getMainPage(Model model) {
         model.addAttribute("data", service.getAllSensorData());
         return "index";  // Страница с вашим HTML
+    }
+
+    @PostMapping("/sensorData")
+    public ResponseEntity<String> receiveSensorData(@RequestBody SensorData sensorData) {
+        // Сохраняем данные в базе
+        service.saveSensorData(sensorData);
+        return ResponseEntity.ok("Data received successfully");
     }
 
     // Страница для скачивания отчета

@@ -10,6 +10,8 @@ public class SensorData {
     private double humidity;
     private long timestamp;
 
+    public SensorData() {}
+
     public SensorData(String roomId, double temperature, double humidity, long timestamp) {
         this.roomId = roomId;
         this.temperature = temperature;

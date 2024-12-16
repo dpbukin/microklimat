@@ -5,10 +5,10 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Копируем jar-файл в контейнер
-COPY target/floorplan-1.0.0.jar /app/floorplan.jar
+COPY target/microklimat-0.0.1-SNAPSHOT.jar /app/microklimat.jar
 
 # Открываем порт 8080 для приложения
 EXPOSE 8080
 
 # Запускаем приложение при старте контейнера
-CMD ["java", "-jar", "floorplan.jar"]
+CMD ["java", "-jar", "microklimat.jar"]
