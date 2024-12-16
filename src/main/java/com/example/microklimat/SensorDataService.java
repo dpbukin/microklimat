@@ -18,13 +18,13 @@ public class SensorDataService {
         return allData.subList(Math.max(size - 10, 0), size);  // Возвращаем последние 10 записей
     }
     public void saveSensorData(SensorData data) {
-        System.out.println("Сохранение данных в репозиторий: " + data);
+//        System.out.println("Сохранение данных в репозиторий: " + data);
         repository.save(data);
     }
 
     public List<SensorData> getAllSensorData() {
         List<SensorData> data = repository.findAll();
-        System.out.println("Получены данные из репозитория: " + data);
+//        System.out.println("Получены данные из репозитория: " + data);
         return data;
     }
 

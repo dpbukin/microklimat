@@ -33,13 +33,13 @@ public class SensorDataController {
 
     @PostMapping("/sensorData")
     public ResponseEntity<String> receiveSensorData(@RequestBody SensorData sensorData) {
-        System.out.println("Получены данные от датчика: " + sensorData);
+//        System.out.println("Получены данные от датчика: " + sensorData);
 
         try {
             service.saveSensorData(sensorData);
-            System.out.println("Данные успешно сохранены: " + sensorData);
+//            System.out.println("Данные успешно сохранены: " + sensorData);
         } catch (Exception e) {
-            System.err.println("Ошибка при сохранении данных: " + e.getMessage());
+//            System.err.println("Ошибка при сохранении данных: " + e.getMessage());
             e.printStackTrace();
         }
 

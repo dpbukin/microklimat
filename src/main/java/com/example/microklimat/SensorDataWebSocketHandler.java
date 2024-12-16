@@ -31,7 +31,7 @@ public class SensorDataWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // Добавление клиента в список при установлении соединения
         sessions.put(session.getId(), session);
-        System.out.println("Новое подключение: " + session.getId());
+//        System.out.println("Новое подключение: " + session.getId());
 
         // Отправить текущие данные клиенту при подключении
         sendSensorData(session);
@@ -40,7 +40,7 @@ public class SensorDataWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         String payload = message.getPayload();
-        System.out.println("Получено сообщение по WebSocket: " + payload);
+//        System.out.println("Получено сообщение по WebSocket: " + payload);
 
         if ("getData".equals(payload)) {
             // Запрос от клиента на получение данных
@@ -52,13 +52,13 @@ public class SensorDataWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         // Удалить сессию клиента из списка после закрытия соединения
         sessions.remove(session.getId());
-        System.out.println("Подключение закрыто: " + session.getId());
+//        System.out.println("Подключение закрыто: " + session.getId());
     }
 
     private void sendSensorData(WebSocketSession session) throws IOException {
         // Получаем последние данные из MongoDB
         List<SensorData> sensorDataList = service.getAllSensorData();
-        System.out.println("Данные из MongoDB для отправки: " + sensorDataList);
+//        System.out.println("Данные из MongoDB для отправки: " + sensorDataList);
 
         // Формируем данные для отправки клиенту
         Map<String, Object> response = new HashMap<>();
@@ -70,7 +70,7 @@ public class SensorDataWebSocketHandler extends TextWebSocketHandler {
         }
 
         String jsonResponse = new ObjectMapper().writeValueAsString(response);
-        System.out.println("Отправка данных клиенту по WebSocket: " + jsonResponse);
+//        System.out.println("Отправка данных клиенту по WebSocket: " + jsonResponse);
 
         // Отправляем данные только текущему клиенту
         session.sendMessage(new TextMessage(jsonResponse));
